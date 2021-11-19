@@ -1,6 +1,6 @@
 ﻿using Dummy;
-using Greet;
-//using Calculate;
+//using Greet;
+using Calculator;
 using Grpc.Core;
 using System;
 using System.Collections.Generic;
@@ -25,18 +25,20 @@ namespace Client
             });
 
             //var client = new DummyService.DummyServiceClient(channel);
-            var client = new GreetingService.GreetingServiceClient(channel);
+            //var client = new GreetingService.GreetingServiceClient(channel);
+            var client = new CalculatorService.CalculatorServiceClient(channel);
 
-            var greeting = new Greeting()
+            var request = new Request() 
             {
-                FirstName = "Ben", 
-                LastName = "Bowen"
+                Value1 = 3, 
+                Value2 = 5
             };
 
-            var request = new GreetingRequest() { Greeting = greeting };
-            var response = client.Greet(request);
+            //var request = new GreetingRequest() { Greeting = greeting };
+            //var response = client.Greet(request);
+            var response = client.Calculate(request);
 
-            Console.WriteLine(response.Result); 
+            Console.WriteLine($"Calculations are completed: {response.Result}"); 
 
             channel.ShutdownAsync().Wait();
             Console.ReadKey();

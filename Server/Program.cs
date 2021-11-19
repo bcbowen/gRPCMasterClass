@@ -1,4 +1,5 @@
-﻿using Greet;
+﻿//using Greet;
+using Calculator;
 using Grpc.Core;
 
 using System;
@@ -18,11 +19,19 @@ namespace Server
             Grpc.Core.Server server = null;
             try
             {
+                /*
                 server = new Grpc.Core.Server()
                 {
                     Services = { GreetingService.BindService(new GreetingServiceImpl()) },
                     Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
                 };
+                */
+                server = new Grpc.Core.Server()
+                {
+                    Services = { CalculatorService.BindService(new CalculateServiceImpl()) },
+                    Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
+                };
+
                 server.Start();
                 Console.WriteLine($"The server is listening on port: {Port}");
                 Console.ReadKey();
