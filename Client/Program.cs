@@ -13,7 +13,7 @@ namespace Client
     class Program
     {
         const string target = "127.0.0.1:50051";
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Channel channel = new Channel(target, ChannelCredentials.Insecure);
             channel.ConnectAsync().ContinueWith((task) => 
@@ -25,8 +25,8 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            //CallGreetService(channel);
-            CallCalculateService(channel);
+            await CallGreetService(channel);
+            //CallCalculateService(channel);
 
             channel.ShutdownAsync().Wait();
             Console.ReadKey();
@@ -38,12 +38,22 @@ namespace Client
         }
         */
 
-        private static void CallGreetService(Channel channel)
+        private static async Task CallGreetService(Channel channel)
         {
             var client = new GreetingService.GreetingServiceClient(channel);
-            var request = new GreetingRequest() { Greeting = new Greeting() { FirstName = "George", LastName = "Costanza" } };
-            var response = client.Greet(request);
-            Console.WriteLine(response.Result);
+            var greeting = new Greeting() { FirstName = "George", LastName = "Costanza" };
+            var greetUnaryRequest = new GreetingRequest() { Greeting = greeting };
+            var greetUnaryResponse = client.Greet(greetUnaryRequest);
+            Console.WriteLine($"Unary response: {greetUnaryResponse.Result}");
+
+            var greetStreamRequest = new GreetingStreamRequest() { Greeting = greeting };
+            var greetStreamResponse = client.GreetStream(greetStreamRequest);
+            //Console.WriteLine($"Unary response: {greetStreamResponse.Result}");
+            while (await greetStreamResponse.ResponseStream.MoveNext()) 
+            {
+                Console.WriteLine(greetStreamResponse.ResponseStream.Current.Result);
+                await Task.Delay(200);
+            }
         }
 
         private static void CallCalculateService(Channel channel)

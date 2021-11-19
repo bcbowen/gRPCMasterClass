@@ -21,9 +21,9 @@ namespace Server
             Console.WriteLine("The server received the request");
             Console.WriteLine(request.ToString());
             string result = $"hello {request.Greeting.FirstName} {request.Greeting.LastName}";
-            foreach (int i in Enumerable.Range(1, 10)) 
+            foreach (char c in result) 
             {
-                await responseStream.WriteAsync(new GreetingStreamResponse() { Result = result});
+                await responseStream.WriteAsync(new GreetingStreamResponse() { Result = c.ToString()});
             }
         }
     }
