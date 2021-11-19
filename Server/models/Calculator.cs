@@ -24,32 +24,32 @@ namespace Calculator {
     static CalculatorReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChBjYWxjdWxhdG9yLnByb3RvEgpDYWxjdWxhdG9yIikKB1JlcXVlc3QSDgoG",
-            "dmFsdWUxGAEgASgFEg4KBnZhbHVlMhgCIAEoBSIaCghSZXNwb25zZRIOCgZy",
-            "ZXN1bHQYASABKAUyTQoRQ2FsY3VsYXRvclNlcnZpY2USOAoJQ2FsY3VsYXRl",
-            "EhMuQ2FsY3VsYXRvci5SZXF1ZXN0GhQuQ2FsY3VsYXRvci5SZXNwb25zZSIA",
-            "YgZwcm90bzM="));
+            "ChBjYWxjdWxhdG9yLnByb3RvEgpDYWxjdWxhdG9yIiwKClN1bVJlcXVlc3QS",
+            "DgoGdmFsdWUxGAEgASgFEg4KBnZhbHVlMhgCIAEoBSIdCgtTdW1SZXNwb25z",
+            "ZRIOCgZyZXN1bHQYASABKAUyVgoRQ2FsY3VsYXRvclNlcnZpY2USQQoMQ2Fs",
+            "Y3VsYXRlU3VtEhYuQ2FsY3VsYXRvci5TdW1SZXF1ZXN0GhcuQ2FsY3VsYXRv",
+            "ci5TdW1SZXNwb25zZSIAYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Calculator.Request), global::Calculator.Request.Parser, new[]{ "Value1", "Value2" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Calculator.Response), global::Calculator.Response.Parser, new[]{ "Result" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Calculator.SumRequest), global::Calculator.SumRequest.Parser, new[]{ "Value1", "Value2" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Calculator.SumResponse), global::Calculator.SumResponse.Parser, new[]{ "Result" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
-  public sealed partial class Request : pb::IMessage<Request>
+  public sealed partial class SumRequest : pb::IMessage<SumRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Request> _parser = new pb::MessageParser<Request>(() => new Request());
+    private static readonly pb::MessageParser<SumRequest> _parser = new pb::MessageParser<SumRequest>(() => new SumRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Request> Parser { get { return _parser; } }
+    public static pb::MessageParser<SumRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -65,7 +65,7 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Request() {
+    public SumRequest() {
       OnConstruction();
     }
 
@@ -73,7 +73,7 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Request(Request other) : this() {
+    public SumRequest(SumRequest other) : this() {
       value1_ = other.value1_;
       value2_ = other.value2_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -81,8 +81,8 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Request Clone() {
-      return new Request(this);
+    public SumRequest Clone() {
+      return new SumRequest(this);
     }
 
     /// <summary>Field number for the "value1" field.</summary>
@@ -112,12 +112,12 @@ namespace Calculator {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Request);
+      return Equals(other as SumRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Request other) {
+    public bool Equals(SumRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -203,7 +203,7 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Request other) {
+    public void MergeFrom(SumRequest other) {
       if (other == null) {
         return;
       }
@@ -266,16 +266,16 @@ namespace Calculator {
 
   }
 
-  public sealed partial class Response : pb::IMessage<Response>
+  public sealed partial class SumResponse : pb::IMessage<SumResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Response> _parser = new pb::MessageParser<Response>(() => new Response());
+    private static readonly pb::MessageParser<SumResponse> _parser = new pb::MessageParser<SumResponse>(() => new SumResponse());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Response> Parser { get { return _parser; } }
+    public static pb::MessageParser<SumResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -291,7 +291,7 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Response() {
+    public SumResponse() {
       OnConstruction();
     }
 
@@ -299,15 +299,15 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Response(Response other) : this() {
+    public SumResponse(SumResponse other) : this() {
       result_ = other.result_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Response Clone() {
-      return new Response(this);
+    public SumResponse Clone() {
+      return new SumResponse(this);
     }
 
     /// <summary>Field number for the "result" field.</summary>
@@ -325,12 +325,12 @@ namespace Calculator {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Response);
+      return Equals(other as SumResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Response other) {
+    public bool Equals(SumResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -403,7 +403,7 @@ namespace Calculator {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Response other) {
+    public void MergeFrom(SumResponse other) {
       if (other == null) {
         return;
       }

@@ -46,17 +46,17 @@ namespace Calculator {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Calculator.Request> __Marshaller_Calculator_Request = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.Request.Parser));
+    static readonly grpc::Marshaller<global::Calculator.SumRequest> __Marshaller_Calculator_SumRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.SumRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Calculator.Response> __Marshaller_Calculator_Response = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.Response.Parser));
+    static readonly grpc::Marshaller<global::Calculator.SumResponse> __Marshaller_Calculator_SumResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.SumResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Calculator.Request, global::Calculator.Response> __Method_Calculate = new grpc::Method<global::Calculator.Request, global::Calculator.Response>(
+    static readonly grpc::Method<global::Calculator.SumRequest, global::Calculator.SumResponse> __Method_CalculateSum = new grpc::Method<global::Calculator.SumRequest, global::Calculator.SumResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "Calculate",
-        __Marshaller_Calculator_Request,
-        __Marshaller_Calculator_Response);
+        "CalculateSum",
+        __Marshaller_Calculator_SumRequest,
+        __Marshaller_Calculator_SumResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -69,7 +69,7 @@ namespace Calculator {
     public abstract partial class CalculatorServiceBase
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Calculator.Response> Calculate(global::Calculator.Request request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Calculator.SumResponse> CalculateSum(global::Calculator.SumRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -104,24 +104,24 @@ namespace Calculator {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Calculator.Response Calculate(global::Calculator.Request request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Calculator.SumResponse CalculateSum(global::Calculator.SumRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return Calculate(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return CalculateSum(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Calculator.Response Calculate(global::Calculator.Request request, grpc::CallOptions options)
+      public virtual global::Calculator.SumResponse CalculateSum(global::Calculator.SumRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_Calculate, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_CalculateSum, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Calculator.Response> CalculateAsync(global::Calculator.Request request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Calculator.SumResponse> CalculateSumAsync(global::Calculator.SumRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return CalculateAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return CalculateSumAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Calculator.Response> CalculateAsync(global::Calculator.Request request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Calculator.SumResponse> CalculateSumAsync(global::Calculator.SumRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_Calculate, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_CalculateSum, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -137,7 +137,7 @@ namespace Calculator {
     public static grpc::ServerServiceDefinition BindService(CalculatorServiceBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_Calculate, serviceImpl.Calculate).Build();
+          .AddMethod(__Method_CalculateSum, serviceImpl.CalculateSum).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -147,7 +147,7 @@ namespace Calculator {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, CalculatorServiceBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_Calculate, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Calculator.Request, global::Calculator.Response>(serviceImpl.Calculate));
+      serviceBinder.AddMethod(__Method_CalculateSum, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Calculator.SumRequest, global::Calculator.SumResponse>(serviceImpl.CalculateSum));
     }
 
   }

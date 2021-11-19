@@ -1,5 +1,5 @@
-﻿using Dummy;
-//using Greet;
+﻿//using Dummy;
+using Greet;
 using Calculator;
 using Grpc.Core;
 using System;
@@ -13,7 +13,7 @@ namespace Client
     class Program
     {
         const string target = "127.0.0.1:50051";
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Channel channel = new Channel(target, ChannelCredentials.Insecure);
             channel.ConnectAsync().ContinueWith((task) => 
@@ -24,24 +24,42 @@ namespace Client
                 Console.WriteLine(task.Status);
             });
 
-            //var client = new DummyService.DummyServiceClient(channel);
-            //var client = new GreetingService.GreetingServiceClient(channel);
-            var client = new CalculatorService.CalculatorServiceClient(channel);
-
-            var request = new Request() 
-            {
-                Value1 = 3, 
-                Value2 = 5
-            };
-
-            //var request = new GreetingRequest() { Greeting = greeting };
-            //var response = client.Greet(request);
-            var response = client.Calculate(request);
-
-            Console.WriteLine($"Calculations are completed: {response.Result}"); 
+            //CallDummyService(channel);
+            //CallGreetService(channel);
+            CallCalculateService(channel);
 
             channel.ShutdownAsync().Wait();
             Console.ReadKey();
+        }
+        /*
+        private static void CallDummyService(Channel channel) 
+        {
+            var client = new DummyService.DummyServiceClient(channel);
+        }
+        */
+
+        private static void CallGreetService(Channel channel)
+        {
+            var client = new GreetingService.GreetingServiceClient(channel);
+            var request = new GreetingRequest() { Greeting = new Greeting() { FirstName = "George", LastName = "Costanza" } };
+            var response = client.Greet(request);
+            Console.WriteLine(response.Result);
+        }
+
+        private static void CallCalculateService(Channel channel)
+        {
+            var client = new CalculatorService.CalculatorServiceClient(channel);
+
+            var request = new SumRequest()
+            {
+                Value1 = 3,
+                Value2 = 5
+            };
+
+            var response = client.CalculateSum(request);
+
+            Console.WriteLine($"Calculations are completed: {response.Result}");
+            
         }
     }
 }

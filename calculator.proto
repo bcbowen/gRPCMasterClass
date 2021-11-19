@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package Calculator;
 
-message Request {
+message SumRequest {
 	int32 value1 = 1;
 	int32 value2 = 2;
 }
 
-message Response {
+message SumResponse {
 	int32 result = 1;
 }
 
 service CalculatorService {
-	rpc Calculate(Request)	returns (Response){}
+	rpc CalculateSum(SumRequest)	returns (SumResponse){}
 }
