@@ -26,8 +26,8 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            //await CallGreetService(channel);
-            await CallCalculateService(channel);
+            await CallGreetService(channel);
+            //await CallCalculateService(channel);
             //await CallPrimesService(channel);
 
             channel.ShutdownAsync().Wait();
@@ -42,15 +42,14 @@ namespace Client
 
         private static async Task CallGreetService(Channel channel)
         {
+            List<GreetingRequest> requests = GetRandomNames();
             string separator = new String('*', 50) + Environment.NewLine;
             var client = new GreetingService.GreetingServiceClient(channel);
-            var greeting = new Greeting() { FirstName = "George", LastName = "Costanza" };
-            var greetUnaryRequest = new GreetingRequest() { Greeting = greeting };
+            var greetUnaryRequest = requests[0];
             var greetUnaryResponse = client.Greet(greetUnaryRequest);
             Console.WriteLine($"Unary response: {greetUnaryResponse.Result}");
 
-            var greetRequest = new GreetingRequest() { Greeting = greeting };
-            var greetStreamResponse = client.GreetLongResponse(greetRequest);
+            var greetStreamResponse = client.GreetLongResponse(requests[1]);
             Console.WriteLine(separator);
 
             Console.WriteLine("Stream response: ");
@@ -62,13 +61,58 @@ namespace Client
             Console.WriteLine("End of stream");
             Console.WriteLine(separator);
 
-            var stream = client.GreetLongRequest();
-            await stream.RequestStream.WriteAsync(new GreetingStreamRequest { Key = "first_name", Value = "Frank" });
-            await stream.RequestStream.WriteAsync(new GreetingStreamRequest { Key = "last_name", Value = "Costanza" });
-            await stream.RequestStream.CompleteAsync();
-            var response = await stream.ResponseAsync;
+            var streamingClientRequest = client.GreetLongRequest();
+            await streamingClientRequest.RequestStream.WriteAsync(new GreetingStreamRequest { Key = "first_name", Value = requests[2].Greeting.FirstName });
+            await streamingClientRequest.RequestStream.WriteAsync(new GreetingStreamRequest { Key = "last_name", Value = requests[2].Greeting.LastName });
+            await streamingClientRequest.RequestStream.CompleteAsync();
+            var response = await streamingClientRequest.ResponseAsync;
             Console.WriteLine($"Client stream response: {response.Result}");
             Console.WriteLine(separator);
+
+            Console.WriteLine("Bidirectional stream: ");
+            var bidirectionalRequest = client.GreetBidirectional();
+
+            var responseReaderTask = Task.Run(async () => {
+                while (await bidirectionalRequest.ResponseStream.MoveNext()) 
+                {
+                    Console.WriteLine($"Received: {bidirectionalRequest.ResponseStream.Current.Result}"); 
+                }
+            });
+
+            foreach (GreetingRequest request in requests) 
+            {
+                await bidirectionalRequest.RequestStream.WriteAsync(request);
+                Console.WriteLine($"Writing {request.Greeting.FirstName} {request.Greeting.LastName} to stream");
+            }
+
+            await bidirectionalRequest.RequestStream.CompleteAsync();
+
+            Console.WriteLine("Bidirectional stream done writing ");
+            Console.WriteLine(separator);
+
+            await responseReaderTask;
+            
+            Console.WriteLine("Bidirectional stream done reading ");
+            Console.WriteLine(separator);
+        }
+
+        private static List<GreetingRequest> GetRandomNames() 
+        {
+            List<GreetingRequest> names = new List<GreetingRequest>();
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Jermaine", LastName = "Boone" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Jason", LastName = "Roach" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Hugh", LastName = "Gould" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Savanah", LastName = "Black" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Juliet", LastName = "Lucero" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Elijah", LastName = "Graham" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Dakota", LastName = "Acosta" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Brooklynn", LastName = "Montoya" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Aylin", LastName = "Stanley" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Jacoby", LastName = "Odom" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Maddison", LastName = "Norris" } });
+            names.Add(new GreetingRequest { Greeting = new Greeting { FirstName = "Jeremy", LastName = "Greer" } });
+
+            return names;
         }
 
         private static async Task CallCalculateService(Channel channel)

@@ -33,4 +33,7 @@ service GreetingService {
 
 	// Client streaming
 	rpc GreetLongRequest (stream GreetingStreamRequest) returns (GreetingResponse) {}
+
+	// Bidirectional streaming 
+	rpc GreetBidirectional (stream GreetingRequest) returns (stream GreetingResponse) {}
 }

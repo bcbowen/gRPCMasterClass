@@ -48,5 +48,16 @@ namespace Server
 
             return await Greet(request, context);
         }
+
+        public override async Task GreetBidirectional(IAsyncStreamReader<GreetingRequest> requestStream, IServerStreamWriter<GreetingResponse> responseStream, ServerCallContext context)
+        {
+            while (await requestStream.MoveNext()) 
+            {
+                var result = await Greet(requestStream.Current, context);
+                Console.WriteLine($"processed {result.Result}");
+                await responseStream.WriteAsync(result);
+            }
+
+        }
     }
 }
