@@ -27,20 +27,22 @@ namespace Greet {
             "Cg5ncmVldGluZy5wcm90bxIFZ3JlZXQiMQoIR3JlZXRpbmcSEgoKZmlyc3Rf",
             "bmFtZRgBIAEoCRIRCglsYXN0X25hbWUYAiABKAkiNAoPR3JlZXRpbmdSZXF1",
             "ZXN0EiEKCGdyZWV0aW5nGAEgASgLMg8uZ3JlZXQuR3JlZXRpbmciIgoQR3Jl",
-            "ZXRpbmdSZXNwb25zZRIOCgZyZXN1bHQYASABKAkiOgoVR3JlZXRpbmdTdHJl",
-            "YW1SZXF1ZXN0EiEKCGdyZWV0aW5nGAEgASgLMg8uZ3JlZXQuR3JlZXRpbmci",
-            "KAoWR3JlZXRpbmdTdHJlYW1SZXNwb25zZRIOCgZyZXN1bHQYASABKAkynQEK",
-            "D0dyZWV0aW5nU2VydmljZRI6CgVHcmVldBIWLmdyZWV0LkdyZWV0aW5nUmVx",
-            "dWVzdBoXLmdyZWV0LkdyZWV0aW5nUmVzcG9uc2UiABJOCgtHcmVldFN0cmVh",
-            "bRIcLmdyZWV0LkdyZWV0aW5nU3RyZWFtUmVxdWVzdBodLmdyZWV0LkdyZWV0",
-            "aW5nU3RyZWFtUmVzcG9uc2UiADABYgZwcm90bzM="));
+            "ZXRpbmdSZXNwb25zZRIOCgZyZXN1bHQYASABKAkiMwoVR3JlZXRpbmdTdHJl",
+            "YW1SZXF1ZXN0EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCSIoChZHcmVl",
+            "dGluZ1N0cmVhbVJlc3BvbnNlEg4KBnJlc3VsdBgBIAEoCTLsAQoPR3JlZXRp",
+            "bmdTZXJ2aWNlEjoKBUdyZWV0EhYuZ3JlZXQuR3JlZXRpbmdSZXF1ZXN0Ghcu",
+            "Z3JlZXQuR3JlZXRpbmdSZXNwb25zZSIAEk4KEUdyZWV0TG9uZ1Jlc3BvbnNl",
+            "EhYuZ3JlZXQuR3JlZXRpbmdSZXF1ZXN0Gh0uZ3JlZXQuR3JlZXRpbmdTdHJl",
+            "YW1SZXNwb25zZSIAMAESTQoQR3JlZXRMb25nUmVxdWVzdBIcLmdyZWV0Lkdy",
+            "ZWV0aW5nU3RyZWFtUmVxdWVzdBoXLmdyZWV0LkdyZWV0aW5nUmVzcG9uc2Ui",
+            "ACgBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Greet.Greeting), global::Greet.Greeting.Parser, new[]{ "FirstName", "LastName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Greet.GreetingRequest), global::Greet.GreetingRequest.Parser, new[]{ "Greeting" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Greet.GreetingResponse), global::Greet.GreetingResponse.Parser, new[]{ "Result" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Greet.GreetingStreamRequest), global::Greet.GreetingStreamRequest.Parser, new[]{ "Greeting" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Greet.GreetingStreamRequest), global::Greet.GreetingStreamRequest.Parser, new[]{ "Key", "Value" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Greet.GreetingStreamResponse), global::Greet.GreetingStreamResponse.Parser, new[]{ "Result" }, null, null, null, null)
           }));
     }
@@ -695,7 +697,8 @@ namespace Greet {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public GreetingStreamRequest(GreetingStreamRequest other) : this() {
-      greeting_ = other.greeting_ != null ? other.greeting_.Clone() : null;
+      key_ = other.key_;
+      value_ = other.value_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -705,15 +708,27 @@ namespace Greet {
       return new GreetingStreamRequest(this);
     }
 
-    /// <summary>Field number for the "greeting" field.</summary>
-    public const int GreetingFieldNumber = 1;
-    private global::Greet.Greeting greeting_;
+    /// <summary>Field number for the "key" field.</summary>
+    public const int KeyFieldNumber = 1;
+    private string key_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Greet.Greeting Greeting {
-      get { return greeting_; }
+    public string Key {
+      get { return key_; }
       set {
-        greeting_ = value;
+        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "value" field.</summary>
+    public const int ValueFieldNumber = 2;
+    private string value_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Value {
+      get { return value_; }
+      set {
+        value_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -732,7 +747,8 @@ namespace Greet {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(Greeting, other.Greeting)) return false;
+      if (Key != other.Key) return false;
+      if (Value != other.Value) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -740,7 +756,8 @@ namespace Greet {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (greeting_ != null) hash ^= Greeting.GetHashCode();
+      if (Key.Length != 0) hash ^= Key.GetHashCode();
+      if (Value.Length != 0) hash ^= Value.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -759,9 +776,13 @@ namespace Greet {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (greeting_ != null) {
+      if (Key.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteMessage(Greeting);
+        output.WriteString(Key);
+      }
+      if (Value.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Value);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -773,9 +794,13 @@ namespace Greet {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (greeting_ != null) {
+      if (Key.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteMessage(Greeting);
+        output.WriteString(Key);
+      }
+      if (Value.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Value);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -787,8 +812,11 @@ namespace Greet {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (greeting_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Greeting);
+      if (Key.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
+      }
+      if (Value.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Value);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -802,11 +830,11 @@ namespace Greet {
       if (other == null) {
         return;
       }
-      if (other.greeting_ != null) {
-        if (greeting_ == null) {
-          Greeting = new global::Greet.Greeting();
-        }
-        Greeting.MergeFrom(other.Greeting);
+      if (other.Key.Length != 0) {
+        Key = other.Key;
+      }
+      if (other.Value.Length != 0) {
+        Value = other.Value;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -824,10 +852,11 @@ namespace Greet {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            if (greeting_ == null) {
-              Greeting = new global::Greet.Greeting();
-            }
-            input.ReadMessage(Greeting);
+            Key = input.ReadString();
+            break;
+          }
+          case 18: {
+            Value = input.ReadString();
             break;
           }
         }
@@ -846,10 +875,11 @@ namespace Greet {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            if (greeting_ == null) {
-              Greeting = new global::Greet.Greeting();
-            }
-            input.ReadMessage(Greeting);
+            Key = input.ReadString();
+            break;
+          }
+          case 18: {
+            Value = input.ReadString();
             break;
           }
         }

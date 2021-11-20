@@ -16,7 +16,8 @@ message GreetingResponse {
 }
 
 message GreetingStreamRequest {
-	Greeting greeting = 1;
+	string key = 1; 
+	string value = 2; 
 }
 
 message GreetingStreamResponse {
@@ -28,5 +29,8 @@ service GreetingService {
 	rpc Greet (GreetingRequest) returns (GreetingResponse) {}
 
 	// Server streaming 
-	rpc GreetStream (GreetingStreamRequest) returns (stream GreetingStreamResponse) {}
+	rpc GreetLongResponse (GreetingRequest) returns (stream GreetingStreamResponse) {}
+
+	// Client streaming
+	rpc GreetLongRequest (stream GreetingStreamRequest) returns (GreetingResponse) {}
 }

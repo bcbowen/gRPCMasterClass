@@ -16,7 +16,7 @@ namespace Server
             return Task.FromResult(new GreetingResponse() { Result = result});
         }
 
-        public override async Task GreetStream(GreetingStreamRequest request, IServerStreamWriter<GreetingStreamResponse> responseStream, ServerCallContext context)
+        public override async Task GreetLongResponse(GreetingRequest request, IServerStreamWriter<GreetingStreamResponse> responseStream, ServerCallContext context)
         {
             Console.WriteLine("The server received the request");
             Console.WriteLine(request.ToString());
@@ -25,6 +25,28 @@ namespace Server
             {
                 await responseStream.WriteAsync(new GreetingStreamResponse() { Result = c.ToString()});
             }
+        }
+
+        public override async Task<GreetingResponse> GreetLongRequest(IAsyncStreamReader<GreetingStreamRequest> requestStream, ServerCallContext context)
+        {
+            GreetingRequest request = new GreetingRequest() { Greeting = new Greeting()};
+            while (await requestStream.MoveNext()) 
+            {
+                switch (requestStream.Current.Key) 
+                {
+                    case "first_name":
+                        request.Greeting.FirstName = requestStream.Current.Value;
+                        break;
+                    case "last_name":
+                        request.Greeting.LastName = requestStream.Current.Value;
+                        break;
+                    default:
+                        Console.WriteLine($"Unrecognized key: {requestStream.Current.Key}");
+                        break;
+                }
+            }
+
+            return await Greet(request, context);
         }
     }
 }

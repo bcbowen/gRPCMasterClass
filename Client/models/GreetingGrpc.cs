@@ -50,9 +50,9 @@ namespace Greet {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Greet.GreetingResponse> __Marshaller_greet_GreetingResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Greet.GreetingResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Greet.GreetingStreamRequest> __Marshaller_greet_GreetingStreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Greet.GreetingStreamRequest.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Greet.GreetingStreamResponse> __Marshaller_greet_GreetingStreamResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Greet.GreetingStreamResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Greet.GreetingStreamRequest> __Marshaller_greet_GreetingStreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Greet.GreetingStreamRequest.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Greet.GreetingRequest, global::Greet.GreetingResponse> __Method_Greet = new grpc::Method<global::Greet.GreetingRequest, global::Greet.GreetingResponse>(
@@ -63,12 +63,20 @@ namespace Greet {
         __Marshaller_greet_GreetingResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Greet.GreetingStreamRequest, global::Greet.GreetingStreamResponse> __Method_GreetStream = new grpc::Method<global::Greet.GreetingStreamRequest, global::Greet.GreetingStreamResponse>(
+    static readonly grpc::Method<global::Greet.GreetingRequest, global::Greet.GreetingStreamResponse> __Method_GreetLongResponse = new grpc::Method<global::Greet.GreetingRequest, global::Greet.GreetingStreamResponse>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
-        "GreetStream",
-        __Marshaller_greet_GreetingStreamRequest,
+        "GreetLongResponse",
+        __Marshaller_greet_GreetingRequest,
         __Marshaller_greet_GreetingStreamResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Greet.GreetingStreamRequest, global::Greet.GreetingResponse> __Method_GreetLongRequest = new grpc::Method<global::Greet.GreetingStreamRequest, global::Greet.GreetingResponse>(
+        grpc::MethodType.ClientStreaming,
+        __ServiceName,
+        "GreetLongRequest",
+        __Marshaller_greet_GreetingStreamRequest,
+        __Marshaller_greet_GreetingResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -100,7 +108,19 @@ namespace Greet {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>A task indicating completion of the handler.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task GreetStream(global::Greet.GreetingStreamRequest request, grpc::IServerStreamWriter<global::Greet.GreetingStreamResponse> responseStream, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task GreetLongResponse(global::Greet.GreetingRequest request, grpc::IServerStreamWriter<global::Greet.GreetingStreamResponse> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Client streaming
+      /// </summary>
+      /// <param name="requestStream">Used for reading requests from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Greet.GreetingResponse> GreetLongRequest(grpc::IAsyncStreamReader<global::Greet.GreetingStreamRequest> requestStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -191,9 +211,9 @@ namespace Greet {
       /// <param name="cancellationToken">An optional token for canceling the call.</param>
       /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncServerStreamingCall<global::Greet.GreetingStreamResponse> GreetStream(global::Greet.GreetingStreamRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncServerStreamingCall<global::Greet.GreetingStreamResponse> GreetLongResponse(global::Greet.GreetingRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GreetStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GreetLongResponse(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
       /// Server streaming 
@@ -202,9 +222,31 @@ namespace Greet {
       /// <param name="options">The options for the call.</param>
       /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncServerStreamingCall<global::Greet.GreetingStreamResponse> GreetStream(global::Greet.GreetingStreamRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncServerStreamingCall<global::Greet.GreetingStreamResponse> GreetLongResponse(global::Greet.GreetingRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncServerStreamingCall(__Method_GreetStream, null, options, request);
+        return CallInvoker.AsyncServerStreamingCall(__Method_GreetLongResponse, null, options, request);
+      }
+      /// <summary>
+      /// Client streaming
+      /// </summary>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncClientStreamingCall<global::Greet.GreetingStreamRequest, global::Greet.GreetingResponse> GreetLongRequest(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GreetLongRequest(new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Client streaming
+      /// </summary>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncClientStreamingCall<global::Greet.GreetingStreamRequest, global::Greet.GreetingResponse> GreetLongRequest(grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncClientStreamingCall(__Method_GreetLongRequest, null, options);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -221,7 +263,8 @@ namespace Greet {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Greet, serviceImpl.Greet)
-          .AddMethod(__Method_GreetStream, serviceImpl.GreetStream).Build();
+          .AddMethod(__Method_GreetLongResponse, serviceImpl.GreetLongResponse)
+          .AddMethod(__Method_GreetLongRequest, serviceImpl.GreetLongRequest).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -232,7 +275,8 @@ namespace Greet {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, GreetingServiceBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_Greet, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Greet.GreetingRequest, global::Greet.GreetingResponse>(serviceImpl.Greet));
-      serviceBinder.AddMethod(__Method_GreetStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Greet.GreetingStreamRequest, global::Greet.GreetingStreamResponse>(serviceImpl.GreetStream));
+      serviceBinder.AddMethod(__Method_GreetLongResponse, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Greet.GreetingRequest, global::Greet.GreetingStreamResponse>(serviceImpl.GreetLongResponse));
+      serviceBinder.AddMethod(__Method_GreetLongRequest, serviceImpl == null ? null : new grpc::ClientStreamingServerMethod<global::Greet.GreetingStreamRequest, global::Greet.GreetingResponse>(serviceImpl.GreetLongRequest));
     }
 
   }

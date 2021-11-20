@@ -12,9 +12,9 @@ namespace Server
         const int Port = 50051;
         static void Main(string[] args)
         {
-            //RunGreetService();
+            RunGreetService();
             //RunCalculateService();            
-            RunPrimesService();
+            //RunPrimesService();
         }
 
         static void RunCalculateService()

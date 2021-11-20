@@ -26,9 +26,9 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            //await CallGreetService(channel);
+            await CallGreetService(channel);
             //CallCalculateService(channel);
-            await CallPrimesService(channel);
+            //await CallPrimesService(channel);
 
             channel.ShutdownAsync().Wait();
             Console.ReadKey();
@@ -42,20 +42,33 @@ namespace Client
 
         private static async Task CallGreetService(Channel channel)
         {
+            string separator = new String('*', 50) + Environment.NewLine;
             var client = new GreetingService.GreetingServiceClient(channel);
             var greeting = new Greeting() { FirstName = "George", LastName = "Costanza" };
             var greetUnaryRequest = new GreetingRequest() { Greeting = greeting };
             var greetUnaryResponse = client.Greet(greetUnaryRequest);
             Console.WriteLine($"Unary response: {greetUnaryResponse.Result}");
 
-            var greetStreamRequest = new GreetingStreamRequest() { Greeting = greeting };
-            var greetStreamResponse = client.GreetStream(greetStreamRequest);
-            //Console.WriteLine($"Unary response: {greetStreamResponse.Result}");
+            var greetRequest = new GreetingRequest() { Greeting = greeting };
+            var greetStreamResponse = client.GreetLongResponse(greetRequest);
+            Console.WriteLine(separator);
+
+            Console.WriteLine("Stream response: ");
             while (await greetStreamResponse.ResponseStream.MoveNext()) 
             {
                 Console.WriteLine(greetStreamResponse.ResponseStream.Current.Result);
-                await Task.Delay(200);
+                await Task.Delay(20);
             }
+            Console.WriteLine("End of stream");
+            Console.WriteLine(separator);
+
+            var stream = client.GreetLongRequest();
+            await stream.RequestStream.WriteAsync(new GreetingStreamRequest { Key = "first_name", Value = "Frank" });
+            await stream.RequestStream.WriteAsync(new GreetingStreamRequest { Key = "last_name", Value = "Costanza" });
+            await stream.RequestStream.CompleteAsync();
+            var response = await stream.ResponseAsync;
+            Console.WriteLine($"Client stream response: {response.Result}");
+            Console.WriteLine(separator);
         }
 
         private static void CallCalculateService(Channel channel)
