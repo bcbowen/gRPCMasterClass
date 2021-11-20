@@ -1,6 +1,7 @@
 ﻿//using Dummy;
 using Greet;
 using Calculator;
+using Primes;
 using Grpc.Core;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,9 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            await CallGreetService(channel);
+            //await CallGreetService(channel);
             //CallCalculateService(channel);
+            await CallPrimesService(channel);
 
             channel.ShutdownAsync().Wait();
             Console.ReadKey();
@@ -69,6 +71,27 @@ namespace Client
             var response = client.CalculateSum(request);
 
             Console.WriteLine($"Calculations are completed: {response.Result}");
+            
+        }
+
+        private static async Task CallPrimesService(Channel channel)
+        {
+            var client = new PrimesService.PrimesServiceClient(channel);
+            List<int> values = new List<int> { 120, 210, 59};
+            foreach (int value in values) 
+            {
+                Console.WriteLine($"Factoring {value}");
+                var primesRequest = new PrimesRequest() { Value = value };
+                var primesResponse = client.CalculatePrimes(primesRequest);
+
+                while (await primesResponse.ResponseStream.MoveNext())
+                {
+                    Console.WriteLine(primesResponse.ResponseStream.Current.Factor);
+                    await Task.Delay(20);
+                }
+                Console.WriteLine("...");
+                Console.WriteLine("");
+            }
             
         }
     }

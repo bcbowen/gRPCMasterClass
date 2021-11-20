@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package primes; 
+
+message PrimesRequest {
+	int32 value = 1;
+}
+
+message PrimesResponse {
+	int32 factor = 1;
+}
+
+service PrimesService {
+
+	rpc CalculatePrimes(PrimesRequest) returns (stream PrimesResponse) {}
+
+}

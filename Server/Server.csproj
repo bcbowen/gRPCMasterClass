@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="CalculateServiceImpl.cs" />
     <Compile Include="GreetingServiceImpl.cs" />
+    <Compile Include="PrimesServiceImpl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

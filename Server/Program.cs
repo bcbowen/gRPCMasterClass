@@ -1,5 +1,6 @@
 ﻿using Calculator;
 using Greet;
+using Primes;
 using Grpc.Core;
 using System;
 using System.IO;
@@ -11,8 +12,9 @@ namespace Server
         const int Port = 50051;
         static void Main(string[] args)
         {
-            RunGreetService();
+            //RunGreetService();
             //RunCalculateService();            
+            RunPrimesService();
         }
 
         static void RunCalculateService()
@@ -30,6 +32,16 @@ namespace Server
             Grpc.Core.Server server = new Grpc.Core.Server()
             {
                 Services = { GreetingService.BindService(new GreetingServiceImpl()) },
+                Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
+            };
+            RunGrpcService(server);
+        }
+
+        static void RunPrimesService()
+        {
+            Grpc.Core.Server server = new Grpc.Core.Server()
+            {
+                Services = { PrimesService.BindService(new PrimesServiceImpl()) },
                 Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
             };
             RunGrpcService(server);
@@ -54,6 +66,7 @@ namespace Server
                     server.ShutdownAsync().Wait();
             }
         }
+
 
     }
 }
