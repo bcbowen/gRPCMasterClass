@@ -13,5 +13,25 @@ namespace Server
             return Task.FromResult(new SumResponse { Result = result });
         }
 
+        public override async Task<AverageResponse> CalculateAverage(IAsyncStreamReader<AverageRequest> requestStream, ServerCallContext context)
+        {
+            double responseCount = 0;
+            double total = 0;
+
+            while (await requestStream.MoveNext()) 
+            {
+                responseCount++;
+                total += requestStream.Current.Value;
+            }
+
+            double result = 0;
+            if (responseCount > 0)
+            {
+                result = total / responseCount;
+            }
+
+            return new AverageResponse { Result = result };
+        }
+
     }
 }

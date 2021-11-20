@@ -26,8 +26,8 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            await CallGreetService(channel);
-            //CallCalculateService(channel);
+            //await CallGreetService(channel);
+            await CallCalculateService(channel);
             //await CallPrimesService(channel);
 
             channel.ShutdownAsync().Wait();
@@ -71,7 +71,7 @@ namespace Client
             Console.WriteLine(separator);
         }
 
-        private static void CallCalculateService(Channel channel)
+        private static async Task CallCalculateService(Channel channel)
         {
             var client = new CalculatorService.CalculatorServiceClient(channel);
 
@@ -81,10 +81,21 @@ namespace Client
                 Value2 = 5
             };
 
-            var response = client.CalculateSum(request);
+            var sumResponse = client.CalculateSum(request);
 
-            Console.WriteLine($"Calculations are completed: {response.Result}");
-            
+            Console.WriteLine($"The sum is: {sumResponse.Result}");
+
+            int[] numbers = { 1, 2, 3, 4};
+
+            var averageStream = client.CalculateAverage();
+            foreach (int value in numbers) 
+            {
+                await averageStream.RequestStream.WriteAsync(new AverageRequest { Value = value });
+            }
+            await averageStream.RequestStream.CompleteAsync();
+            var avgResponse = await averageStream.ResponseAsync;
+
+            Console.WriteLine($"The average is: {avgResponse.Result}");
         }
 
         private static async Task CallPrimesService(Channel channel)
