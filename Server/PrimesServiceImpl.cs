@@ -14,17 +14,15 @@ namespace Server
     {
         public override async Task CalculatePrimes(PrimesRequest request, IServerStreamWriter<PrimesResponse> responseStream, ServerCallContext context)
         {
-            List<int> factors = GetFactors(request.Value);
-            foreach (int factor in factors) 
+            foreach (int factor in GetFactors(request.Value)) 
             {
                 await responseStream.WriteAsync(new PrimesResponse { Factor = factor });
             }
-            
         }
 
-        private List<int> GetFactors(int value)
+        private IEnumerable<int> GetFactors(int value)
         {
-            List<int> factors = new List<int>();
+            //List<int> factors = new List<int>();
             int n = value;
             int k = 2;
             while (n > 1)
@@ -32,7 +30,8 @@ namespace Server
                 if (n % k == 0)
                 {
                     // if k evenly divides into N
-                    factors.Add(k);
+                    //factors.Add(k);
+                    yield return k;
                     n /= k;
                 }
                 else
@@ -40,7 +39,7 @@ namespace Server
                     k++;
                 }
             }
-            return factors;
+            //return factors;
         }
 
     }
