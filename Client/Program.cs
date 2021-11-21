@@ -163,8 +163,25 @@ namespace Client
             }
             Console.WriteLine("Done sending"); 
 
-            await responseReaderTask;
-            Console.WriteLine("Done receiving"); 
+            //await responseReaderTask;
+            Console.WriteLine("Done receiving");
+
+            Console.WriteLine("Square root:");
+            numbers = new int[] { 16, 0, -1};
+
+            foreach (int number in numbers) 
+            {
+                try 
+                {
+                    var response = client.SquareRoot(new SqrtRequest() { Number = number });
+                    Console.WriteLine($"The square root of {number} is {response.Result}, allegedly.");
+                }
+                catch (RpcException ex) 
+                {
+                    Console.WriteLine("Fuck! An error: " + ex.Status.Detail);
+                }
+            }
+            
         }
 
         private static async Task CallPrimesService(Channel channel)

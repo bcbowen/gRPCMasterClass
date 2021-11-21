@@ -57,6 +57,10 @@ namespace Calculator {
     static readonly grpc::Marshaller<global::Calculator.FindMaximumRequest> __Marshaller_Calculator_FindMaximumRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.FindMaximumRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Calculator.FindMaximumResponse> __Marshaller_Calculator_FindMaximumResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.FindMaximumResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Calculator.SqrtRequest> __Marshaller_Calculator_SqrtRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.SqrtRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Calculator.SqrtResponse> __Marshaller_Calculator_SqrtResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Calculator.SqrtResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Calculator.SumRequest, global::Calculator.SumResponse> __Method_CalculateSum = new grpc::Method<global::Calculator.SumRequest, global::Calculator.SumResponse>(
@@ -82,6 +86,14 @@ namespace Calculator {
         __Marshaller_Calculator_FindMaximumRequest,
         __Marshaller_Calculator_FindMaximumResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Calculator.SqrtRequest, global::Calculator.SqrtResponse> __Method_SquareRoot = new grpc::Method<global::Calculator.SqrtRequest, global::Calculator.SqrtResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SquareRoot",
+        __Marshaller_Calculator_SqrtRequest,
+        __Marshaller_Calculator_SqrtResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -106,6 +118,12 @@ namespace Calculator {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task FindMaximum(grpc::IAsyncStreamReader<global::Calculator.FindMaximumRequest> requestStream, grpc::IServerStreamWriter<global::Calculator.FindMaximumResponse> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Calculator.SqrtResponse> SquareRoot(global::Calculator.SqrtRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -179,6 +197,26 @@ namespace Calculator {
       {
         return CallInvoker.AsyncDuplexStreamingCall(__Method_FindMaximum, null, options);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Calculator.SqrtResponse SquareRoot(global::Calculator.SqrtRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SquareRoot(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Calculator.SqrtResponse SquareRoot(global::Calculator.SqrtRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SquareRoot, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Calculator.SqrtResponse> SquareRootAsync(global::Calculator.SqrtRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SquareRootAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Calculator.SqrtResponse> SquareRootAsync(global::Calculator.SqrtRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SquareRoot, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override CalculatorServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -195,7 +233,8 @@ namespace Calculator {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_CalculateSum, serviceImpl.CalculateSum)
           .AddMethod(__Method_CalculateAverage, serviceImpl.CalculateAverage)
-          .AddMethod(__Method_FindMaximum, serviceImpl.FindMaximum).Build();
+          .AddMethod(__Method_FindMaximum, serviceImpl.FindMaximum)
+          .AddMethod(__Method_SquareRoot, serviceImpl.SquareRoot).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -208,6 +247,7 @@ namespace Calculator {
       serviceBinder.AddMethod(__Method_CalculateSum, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Calculator.SumRequest, global::Calculator.SumResponse>(serviceImpl.CalculateSum));
       serviceBinder.AddMethod(__Method_CalculateAverage, serviceImpl == null ? null : new grpc::ClientStreamingServerMethod<global::Calculator.AverageRequest, global::Calculator.AverageResponse>(serviceImpl.CalculateAverage));
       serviceBinder.AddMethod(__Method_FindMaximum, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::Calculator.FindMaximumRequest, global::Calculator.FindMaximumResponse>(serviceImpl.FindMaximum));
+      serviceBinder.AddMethod(__Method_SquareRoot, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Calculator.SqrtRequest, global::Calculator.SqrtResponse>(serviceImpl.SquareRoot));
     }
 
   }

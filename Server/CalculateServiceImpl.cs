@@ -51,5 +51,20 @@ namespace Server
             
             }
         }
+
+        public override async Task<SqrtResponse> SquareRoot(SqrtRequest request, ServerCallContext context)
+        {
+            int number = request.Number;
+
+            if (number >= 0)
+            {
+                return new SqrtResponse() { Result = Math.Sqrt(number) };
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "number must be > 0"));
+            }
+
+        }
     }
 }
