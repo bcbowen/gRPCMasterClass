@@ -26,8 +26,8 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            await CallGreetService(channel);
-            //await CallCalculateService(channel);
+            //await CallGreetService(channel);
+            await CallCalculateService(channel);
             //await CallPrimesService(channel);
 
             channel.ShutdownAsync().Wait();
@@ -119,6 +119,7 @@ namespace Client
         {
             var client = new CalculatorService.CalculatorServiceClient(channel);
 
+            Console.WriteLine("Calculate Sum: ");
             var request = new SumRequest()
             {
                 Value1 = 3,
@@ -129,6 +130,7 @@ namespace Client
 
             Console.WriteLine($"The sum is: {sumResponse.Result}");
 
+            Console.WriteLine("Calculate Average: ");
             int[] numbers = { 1, 2, 3, 4};
 
             var averageStream = client.CalculateAverage();
@@ -140,6 +142,29 @@ namespace Client
             var avgResponse = await averageStream.ResponseAsync;
 
             Console.WriteLine($"The average is: {avgResponse.Result}");
+
+            Console.WriteLine("Find max in stream:");
+
+            var maxStream = client.FindMaximum();
+            numbers = new int[] {1, 5, 3, 6, 2, 20};
+
+            var responseReaderTask = Task.Run(async () => {
+                while (await maxStream.ResponseStream.MoveNext()) 
+                {
+                    Console.WriteLine($"Current max is {maxStream.ResponseStream.Current.Result}");
+                }
+            });
+
+            foreach (int value in numbers) 
+            {
+                Console.WriteLine($"Sending {value}");
+                await maxStream.RequestStream.WriteAsync(new FindMaximumRequest { Value = value });
+                await Task.Delay(20);
+            }
+            Console.WriteLine("Done sending"); 
+
+            await responseReaderTask;
+            Console.WriteLine("Done receiving"); 
         }
 
         private static async Task CallPrimesService(Channel channel)

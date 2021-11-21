@@ -1,5 +1,6 @@
 ﻿using Calculator;
 using Grpc.Core;
+using System;
 using System.Threading.Tasks;
 using static Calculator.CalculatorService;
 
@@ -33,5 +34,22 @@ namespace Server
             return new AverageResponse { Result = result };
         }
 
+        public override async Task FindMaximum(IAsyncStreamReader<FindMaximumRequest> requestStream, IServerStreamWriter<FindMaximumResponse> responseStream, ServerCallContext context)
+        {
+            int max = 0;
+            int value;
+            while (await requestStream.MoveNext()) 
+            {
+                value = requestStream.Current.Value;
+                Console.WriteLine($"Processing {value}");
+                if (value > max) 
+                {
+                    await responseStream.WriteAsync(new FindMaximumResponse { Result = value } );
+                    max = value;
+                    Console.WriteLine($"New max is {max}");
+                }
+            
+            }
+        }
     }
 }
