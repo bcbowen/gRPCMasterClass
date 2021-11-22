@@ -36,4 +36,7 @@ service GreetingService {
 
 	// Bidirectional streaming 
 	rpc GreetBidirectional (stream GreetingRequest) returns (stream GreetingResponse) {}
+
+	// Deadline
+	rpc GreetWithDeadline (GreetingRequest) returns (GreetingResponse) {}
 }

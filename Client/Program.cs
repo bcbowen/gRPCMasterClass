@@ -26,8 +26,8 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            //await CallGreetService(channel);
-            await CallCalculateService(channel);
+            await CallGreetService(channel);
+            //await CallCalculateService(channel);
             //await CallPrimesService(channel);
 
             channel.ShutdownAsync().Wait();
@@ -94,6 +94,32 @@ namespace Client
             
             Console.WriteLine("Bidirectional stream done reading ");
             Console.WriteLine(separator);
+
+            CallGreetWithDeadline(client, requests[3], 500, false);
+            CallGreetWithDeadline(client, requests[4], 100, true);
+            
+        }
+
+        private static void CallGreetWithDeadline(GreetingService.GreetingServiceClient client, GreetingRequest request, int timeoutMs, bool expectedTimeout) 
+        {
+            if (expectedTimeout) 
+            {
+                Console.WriteLine("Greet with deadline (Expected to fail): ");
+            }
+            else 
+            {
+                Console.WriteLine("Greet with deadline (Not expected to fail): ");
+            }
+                        
+            try
+            {
+                GreetingResponse response = client.GreetWithDeadline(request, deadline: DateTime.UtcNow.AddMilliseconds(timeoutMs));
+                Console.WriteLine($"Response: {response.Result}");
+            }
+            catch (RpcException ex) when (ex.StatusCode == StatusCode.DeadlineExceeded)
+            {
+                Console.WriteLine("Error: " + ex.Status.Detail);
+            }
         }
 
         private static List<GreetingRequest> GetRandomNames() 
@@ -163,7 +189,6 @@ namespace Client
             }
             Console.WriteLine("Done sending"); 
 
-            //await responseReaderTask;
             Console.WriteLine("Done receiving");
 
             Console.WriteLine("Square root:");
