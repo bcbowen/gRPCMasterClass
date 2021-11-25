@@ -5,12 +5,15 @@ using Grpc.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Grpc.Reflection;
+using Grpc.Reflection.V1Alpha;
 
 namespace Server
 {
     class Program
     {
-        private static SslServerCredentials _credentials; 
+        private static SslServerCredentials _credentials;
+        private static ReflectionServiceImpl _reflectionService;
         const int Port = 50051;
         static void Main(string[] args)
         {
@@ -19,7 +22,7 @@ namespace Server
             var keyPair = new KeyCertificatePair(serverCert, serverKey);
             var caCert = File.ReadAllText("ssl/ca.crt");
             _credentials = new SslServerCredentials(new List<KeyCertificatePair> { keyPair }, caCert, true);
-
+            _reflectionService = new ReflectionServiceImpl(GreetingService.Descriptor, ServerReflection.Descriptor);
             RunGreetService();
             //RunCalculateService();            
             //RunPrimesService();
@@ -29,7 +32,11 @@ namespace Server
         {
             Grpc.Core.Server server = new Grpc.Core.Server()
             {
-                Services = { CalculatorService.BindService(new CalculateServiceImpl()) },
+                Services = 
+                {
+                    CalculatorService.BindService(new CalculateServiceImpl()), 
+                    ServerReflection.BindService(_reflectionService)
+                },
                 Ports = { new ServerPort("localhost", Port, _credentials) }
             };
             RunGrpcService(server);
@@ -39,7 +46,11 @@ namespace Server
         {
             Grpc.Core.Server server = new Grpc.Core.Server()
             {
-                Services = { GreetingService.BindService(new GreetingServiceImpl()) },
+                Services = 
+                {
+                    GreetingService.BindService(new GreetingServiceImpl()),
+                    ServerReflection.BindService(_reflectionService) 
+                },
                 Ports = { new ServerPort("localhost", Port, _credentials) }
             };
             RunGrpcService(server);
@@ -49,7 +60,11 @@ namespace Server
         {
             Grpc.Core.Server server = new Grpc.Core.Server()
             {
-                Services = { PrimesService.BindService(new PrimesServiceImpl()) },
+                Services = 
+                {
+                    PrimesService.BindService(new PrimesServiceImpl()),
+                    ServerReflection.BindService(_reflectionService) 
+                },
                 Ports = { new ServerPort("localhost", Port, _credentials) }
             };
             RunGrpcService(server);
