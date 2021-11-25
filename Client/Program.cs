@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Client
 {
@@ -16,7 +17,13 @@ namespace Client
         const string target = "127.0.0.1:50051";
         static async Task Main(string[] args)
         {
-            Channel channel = new Channel(target, ChannelCredentials.Insecure);
+            var clientCert = File.ReadAllText("ssl/client.crt");
+            var clientKey = File.ReadAllText("ssl/client.key");
+            var caCrt = File.ReadAllText("ssl/ca.crt");
+
+            var channelCredentials = new SslCredentials(caCrt, new KeyCertificatePair(clientCert, clientKey)); 
+
+            Channel channel = new Channel("localhost", 50051, channelCredentials);
             channel.ConnectAsync().ContinueWith((task) => 
             {
                 if (task.Status == TaskStatus.RanToCompletion)
