@@ -53,16 +53,64 @@ namespace Client
         {
             string separator = new String('*', 50) + Environment.NewLine;
             var client = new BlogService.BlogServiceClient(channel);
+
+            Blog.Blog blog = await CreateBlog(client);
+            await ReadBlog(client, blog.Id);
+            blog.Title = "Grilling while snockered";
+            blog.Content = "Step 1: Get snockered; Step 2: Fire up the grill... to be continued";
+            await UpdateBlog(client, blog);
             
-            var blogResponse = client.CreateBlog(new CreateBlogRequest() { 
-               Blog = new Blog.Blog() 
-               {
-                AuthorId = "Ben", 
-             Title = "New Blog", 
-             Content = "This is the blog, dudes"
-               }
+        }
+
+        private static async Task<Blog.Blog> CreateBlog(BlogService.BlogServiceClient client) 
+        {
+            var blogResponse = client.CreateBlog(new CreateBlogRequest()
+            {
+                Blog = new Blog.Blog()
+                {
+                    AuthorId = "Ben",
+                    Title = "New Blog",
+                    Content = "This is the blog, dudes"
+                }
             });
+
             Console.WriteLine($"Blog {blogResponse.Blog.Id} was created");
+
+            return blogResponse.Blog;
+        }
+
+        private static async Task ReadBlog(BlogService.BlogServiceClient client, string blogId) 
+        {
+            try
+            {
+                var response = client.ReadBlog(new ReadBlogRequest()
+                {
+                    BlogId = blogId,
+                });
+                Console.WriteLine(response.Blog.ToString());
+            } 
+            catch (RpcException ex) 
+            {
+                Console.WriteLine(ex.Status.Detail);
+            }
+            
+        }
+
+        private static async Task UpdateBlog(BlogService.BlogServiceClient client, Blog.Blog blog)
+        {
+            try
+            {
+                var response = client.UpdateBlog(new UpdateBlogRequest()
+                {
+                    Blog = blog,
+                });
+                Console.WriteLine(response.Blog.ToString());
+            }
+            catch (RpcException ex)
+            {
+                Console.WriteLine(ex.Status.Detail);
+            }
+
         }
 
         private static async Task CallGreetService(Channel channel)

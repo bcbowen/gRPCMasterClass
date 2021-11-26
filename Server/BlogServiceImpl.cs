@@ -31,5 +31,51 @@ namespace Server
                 Blog = blog
             });
         }
+
+        public override async Task<ReadBlogResponse> ReadBlog(ReadBlogRequest request, ServerCallContext context)
+        {
+            var blogId = request.BlogId;
+            var filter = new FilterDefinitionBuilder<BsonDocument>().Eq("_id", new ObjectId(blogId));
+            var result = _mongoCollection.Find(filter).FirstOrDefault();
+            if (result == null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, $"Blog Id {blogId} not found, man"));
+            }
+
+            Blog.Blog blog = new Blog.Blog() 
+            {
+                AuthorId = result.GetValue("author_id").AsString,
+                Title = result.GetValue("title").AsString,
+                Content = result.GetValue("content").AsString
+            };
+            
+            return new ReadBlogResponse() { Blog = blog};
+        }
+
+        public override async Task<UpdateBlogResponse> UpdateBlog(UpdateBlogRequest request, ServerCallContext context)
+        {
+            var blogId = request.Blog.Id;
+            var filter = new FilterDefinitionBuilder<BsonDocument>().Eq("_id", new ObjectId(blogId));
+            var result = _mongoCollection.Find(filter).FirstOrDefault();
+            if (result == null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, $"Blog Id {blogId} not found, man"));
+            }
+
+            var doc = new BsonDocument("author_id", request.Blog.AuthorId)
+                .Add("title", request.Blog.Title)
+                .Add("content", request.Blog.Content);
+            _mongoCollection.ReplaceOne(filter, doc);
+
+            var blog = new Blog.Blog()
+            {
+                AuthorId = doc.GetValue("author_id").AsString, 
+                Title = doc.GetValue("title").AsString, 
+                Content = doc.GetValue("content").AsString, 
+                Id = blogId
+            };
+
+            return new UpdateBlogResponse() { Blog = blog };
+        }
     }
 }
