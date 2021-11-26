@@ -1,4 +1,5 @@
-﻿using Calculator;
+﻿using Blog;
+using Calculator;
 using Greet;
 using Primes;
 using Grpc.Core;
@@ -23,7 +24,8 @@ namespace Server
             var caCert = File.ReadAllText("ssl/ca.crt");
             _credentials = new SslServerCredentials(new List<KeyCertificatePair> { keyPair }, caCert, true);
             _reflectionService = new ReflectionServiceImpl(GreetingService.Descriptor, ServerReflection.Descriptor);
-            RunGreetService();
+            RunBlogService();
+            //RunGreetService();
             //RunCalculateService();            
             //RunPrimesService();
         }
@@ -90,6 +92,19 @@ namespace Server
             }
         }
 
+        static void RunBlogService()
+        {
+            Grpc.Core.Server server = new Grpc.Core.Server()
+            {
+                Services =
+                {
+                    BlogService.BindService(new BlogServiceImpl()),
+                    ServerReflection.BindService(_reflectionService)
+                },
+                Ports = { new ServerPort("localhost", Port, _credentials) }
+            };
+            RunGrpcService(server);
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿//using Dummy;
+using Blog;
 using Greet;
 using Calculator;
 using Primes;
@@ -33,7 +34,8 @@ namespace Client
             });
 
             //CallDummyService(channel);
-            await CallGreetService(channel);
+            await CallBlogService(channel);
+            //await CallGreetService(channel);
             //await CallCalculateService(channel);
             //await CallPrimesService(channel);
 
@@ -46,6 +48,22 @@ namespace Client
             var client = new DummyService.DummyServiceClient(channel);
         }
         */
+
+        private static async Task CallBlogService(Channel channel)
+        {
+            string separator = new String('*', 50) + Environment.NewLine;
+            var client = new BlogService.BlogServiceClient(channel);
+            
+            var blogResponse = client.CreateBlog(new CreateBlogRequest() { 
+               Blog = new Blog.Blog() 
+               {
+                AuthorId = "Ben", 
+             Title = "New Blog", 
+             Content = "This is the blog, dudes"
+               }
+            });
+            Console.WriteLine($"Blog {blogResponse.Blog.Id} was created");
+        }
 
         private static async Task CallGreetService(Channel channel)
         {
