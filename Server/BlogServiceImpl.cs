@@ -77,5 +77,19 @@ namespace Server
 
             return new UpdateBlogResponse() { Blog = blog };
         }
+
+        public override async Task<DeleteBlogResponse> DeleteBlog(DeleteBlogRequest request, ServerCallContext context)
+        {
+            var blogId = request.BlogId;
+            var filter = new FilterDefinitionBuilder<BsonDocument>().Eq("_id", new ObjectId(blogId));
+            var result = _mongoCollection.DeleteOne(filter);
+
+            if (result.DeletedCount == 0)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, $"The blog with id {blogId} not found, dude!"));
+            }
+
+            return new DeleteBlogResponse() { BlogId = blogId };
+        }
     }
 }

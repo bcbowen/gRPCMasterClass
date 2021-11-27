@@ -59,7 +59,21 @@ namespace Client
             blog.Title = "Grilling while snockered";
             blog.Content = "Step 1: Get snockered; Step 2: Fire up the grill... to be continued";
             await UpdateBlog(client, blog);
-            
+            // uncomment to delete the blog: 
+            //DeleteBlog(client, blog.Id);
+        }
+
+        private static void DeleteBlog(BlogService.BlogServiceClient client, string blogId)
+        {
+            try 
+            {
+                var response = client.DeleteBlog(new DeleteBlogRequest() { BlogId = blogId });
+                Console.WriteLine($"Blog {blogId} was deleted");
+            }
+            catch (RpcException ex) 
+            {
+                Console.WriteLine(ex.Status.Detail); 
+            }
         }
 
         private static async Task<Blog.Blog> CreateBlog(BlogService.BlogServiceClient client) 
