@@ -61,6 +61,24 @@ namespace Client
             await UpdateBlog(client, blog);
             // uncomment to delete the blog: 
             //DeleteBlog(client, blog.Id);
+            List<Blog.Blog> blogs = await ListBlogs(client);
+            foreach (Blog.Blog b in blogs) 
+            {
+                Console.WriteLine(b);
+            }
+        }
+
+
+        private static async Task<List<Blog.Blog>> ListBlogs(BlogService.BlogServiceClient client) 
+        {
+            var response = client.ListBlog(new ListBlogRequest());
+            List<Blog.Blog> blogs = new List<Blog.Blog>();
+            while (await response.ResponseStream.MoveNext()) 
+            {
+                blogs.Add(response.ResponseStream.Current.Blog);
+            }
+
+            return blogs;
         }
 
         private static void DeleteBlog(BlogService.BlogServiceClient client, string blogId)
